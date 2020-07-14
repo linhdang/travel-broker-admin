@@ -1,26 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
+import Agents from './components/agents'
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor () {
+    super()
+    this.state = {
+      providers: [],
+      planners: []
+    }
+  }
+
+  componentDidMount() {
+    console.log("call didmount")
+    fetch('/travel-broker/providers/')
+    .then(res => res.json())
+    .then((data) => {
+      this.setState({ providers: data._embedded["mams.ProviderRegistration"] })
+    })
+    .catch(console.log)
+
+    fetch('/travel-broker/planners/')
+    .then(res => res.json())
+    .then((data) => {
+      this.setState({ planners: data._embedded["mams.PlannerRegistration"] })
+    })
+    .catch(console.log)
+  }
+
+  render () {
+    return (
+      <div>
+        <h1> Providers </h1>
+        <Agents agents={this.state.providers} />
+        <h1> Planners </h1>
+        <Agents agents={this.state.planners} />
+      </div>
+    );
+  }
 }
 
 export default App;
