@@ -1,11 +1,11 @@
 version: '3'
 services:
-#  travel-broker-frontend:
-#    image: "reactui"
-#    ports:
-#      - "80:80"
-#    depends_on:
-#      - travel-broker-engine
+  travel-broker-frontend:
+    image: "registry.hub.docker.com/linhdanghong/mams-travel-broker-admin"
+    ports:
+      - "80:80"
+    depends_on:
+      - travel-broker-engine
   travel-service:
     image: "registry.hub.docker.com/linhdanghong/mams-travel-agent:latest"
     ports:
@@ -32,5 +32,3 @@ services:
       - travel-broker-engine
   travel-broker-engine:
     image: "registry.hub.docker.com/linhdanghong/mams-travel-broker:1.0"
-    ports:
-      - "9000:9000"
